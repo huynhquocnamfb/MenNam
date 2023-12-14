@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả xổ số miền Nam</title>
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #pagenav {
+            background-color: #4caf50; /* Green color */
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #date-selection {
+            text-align: center;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #date-selection label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        #selectedDate {
+            font-size: 14px;
+            padding: 8px;
+            margin-right: 10px;
+        }
+
+        #fetchButton {
+            font-size: 14px;
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #fetchButton:hover {
+            background-color: #45a049;
+        }
+
+        #results-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .lottery-result {
+            border: 1px solid #ddd;
+            margin: 10px;
+            padding: 10px;
+            width: 340px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .lottery-result:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #4caf50; /* Green color */
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center; /* Center-align values */
+        }
+
+        th {
+            background-color: #4caf50; /* Green color */
+            color: #fff;
+        }
+
+        /* Styles for ranking cells */
+        .rank-cell {
+            color: black;
+        }
+
+        /* Custom styles for special elements */
+        th.special-element, td.special-element {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        #date-selection {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #date-selection label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        #selectedDate {
+            font-size: 14px;
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        #date-selection button {
+            font-size: 14px;
+            padding: 8px 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #date-selection button:hover {
+            background-color: #45a049;
+        }
+
+        /* Thêm phần CSS sau vào đoạn mã của bạn */
+
+        /* Phần tử được in đậm và to hơn */
+        .lottery-result h2,
+        .lottery-result th {
+            color: #4caf50; /* Màu xanh chủ đạo */
+            font-weight: bold;
+            font-size: 18px; /* Độ lớn của font */
+        }
+
+        /* Giải Đặc Biệt, Tỉnh thành, Ngày */
+        .lottery-result .rank-cell th {
+            color: #4caf50; /* Màu xanh chủ đạo */
+            font-weight: bold;
+        }
+
+
+        /* Thay đổi màu nền và border cho các ô chứa giá trị */
+        .lottery-result th,
+        .lottery-result td {
+            background-color: #f2f2f2; /* Màu nền xám nhạt */
+            border: 1px solid #ddd; /* Viền xám */
+            font-family: none;
+            font-weight: bold;
+        }
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+<body>
+<div id="pagenav">
+    <!-- Your navigation code here -->
+    Page Navigation
+</div>
+<div id="date-selection">
+    <label for="selectedDate">Chọn ngày:</label>
+    <input type="date" id="selectedDate">
+    <button onclick="fetchData('South')">Miền Nam</button>
+    <button onclick="fetchData('Center')">Miền Trung</button>
+    <button onclick="fetchData('North')">Miền Bắc</button>
+</div>
+<div id="results-container">
+    <!-- Results will be dynamically added here -->
+</div>
+
+<script>
+    function fetchData(region) {
+        const selectedDate = $('#selectedDate').val();
+        const formattedDate = formatDate(selectedDate);
+
+        // Fetch data from API
+        $.ajax({
+            url: `/api/xoso/results${region}`,  // Use region if provided
+            method: 'GET',
+            data: {
+                date: formattedDate
+            },
+            success: function (data) {
+                // Clear previous content
+                $('#results-container').empty();
+
+                // Process the received data and update the HTML dynamically
+                for (let i = 0; i < data.length; i++) {
+                    const result = data[i];
+                    let resultHtml;
+                    if (region != "North")
+                        resultHtml = `
+                <div class="lottery-result">
+                  <h2>${result.region}</h2>
+                <table>
+                                  <tr>
+                    <th>Tỉnh thành</th>
+                    <td>${result.province}</td>
+                  </tr>
+                  <tr>
+                    <th>Mã xổ số</th>
+                    <td>${result.lotteryCode}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Ngày</th>
+                    <td>${result.dateResult}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 8</th>
+                    <td>${result.rank8}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 7</th>
+                    <td>${result.rank7}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 6</th>
+                    <td>${result.rank6.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 5</th>
+                    <td>${result.rank5}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 4</th>
+                    <td>${result.rank4.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 3</th>
+                    <td>${result.rank3.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 2</th>
+                    <td>${result.rank2}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 1</th>
+                    <td>${result.rank1}</td>
+                  </tr>
+                  <tr class="rank-cell" style="color: red; font-weight: bold; font-size: 30px">
+                    <th>Giải Đặc Biệt</th>
+                    <td>${result.specialRank}</td>
+                  </tr>
+                </table>
+                </div>
+              `;
+                    else resultHtml = `
+                <div class="lottery-result">
+                  <h2>${result.region}</h2>
+                <table>
+                                 <tr>
+                    <th>Tỉnh thành</th>
+                    <td>${result.province}</td>
+                  </tr>
+                  <tr>
+                    <th>Mã xổ số</th>
+                    <td>${result.lotteryCode}</td>
+                  </tr>
+
+                  <tr>
+                    <th>Ngày</th>
+                    <td>${result.dateResult}</td>
+                  </tr>
+                   <tr class="rank-cell">
+                    <th>Mã DB</th>
+                    <td>${result.maDB.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 7</th>
+                    <td>${result.rank7.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 6</th>
+                    <td>${result.rank6.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 5</th>
+                    <td>${result.rank5.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 4</th>
+                    <td>${result.rank4.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 3</th>
+                    <td>${result.rank3.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 2</th>
+                    <td>${result.rank2.join(' - ')}</td>
+                  </tr>
+                  <tr class="rank-cell">
+                    <th>Giải 1</th>
+                    <td>${result.rank1}</td>
+                  </tr>
+                  <tr class="rank-cell" style="color: red; font-weight: bold; font-size: 30px">
+                    <th>Giải Đặc Biệt</th>
+                    <td>${result.specialRank}</td>
+                  </tr>
+                </table>
+                </div>
+              `;
+
+
+                    $('#results-container').append(resultHtml);
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching data:', error);
+            }
+        });
+    }
+
+    // Set the default date to the current date
+    const currentDate = new Date().toISOString().split('T')[0];
+    $('#selectedDate').val(currentDate);
+
+    // Initial fetch on page load
+    fetchData();
+
+    // Function to format date as "DD/MM/YYYY"
+    function formatDate(inputDate) {
+        const date = new Date(inputDate);
+        const day = date.getDate();
+        const month = date.getMonth() + 1; // Month is 0-based, so we add 1
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    }
+</script>
+</body>
+
+</html>
