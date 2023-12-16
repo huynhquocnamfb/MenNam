@@ -10,4 +10,6 @@ public interface UserService {
     Optional<User> getUserByUserName(String userName);
 
     List<RankUser> getRankUser();
+
+    List<User> getUsers();
 }

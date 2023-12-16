@@ -11,11 +11,11 @@ import java.time.LocalTime;
 public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_test")
-    private Long idTest;
-    @Column(name = "Name")
+    @Column(name = "test_id")
+    private Long testId;
+    @Column(name = "name")
     private String name;
-    @Column(name = "Time")
+    @Column(name = "time")
     private LocalTime time;
 
     // getters and setters

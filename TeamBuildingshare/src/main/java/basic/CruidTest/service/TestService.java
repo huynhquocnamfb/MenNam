@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface TestService {
     List<Test> getAllTests();
+
+    Test createNewTest(Test test);
+
+    String deleteTestById(Long id);
 }

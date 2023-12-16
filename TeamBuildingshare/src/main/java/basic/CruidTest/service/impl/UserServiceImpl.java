@@ -16,13 +16,18 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public Optional<User> getUserByUserName(String userName) {
-        return userRepository.findByUserName(userName);
+    public Optional<User> getUserByUserName(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public List<RankUser> getRankUser() {
-        return userRepository.getAllUser();
+        return null;
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepository.findAll();
     }
 
 

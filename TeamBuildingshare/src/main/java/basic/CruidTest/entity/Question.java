@@ -5,33 +5,33 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "question")
+@Table(name = "questions")
 @Data
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_question")
-    private Long idQuestion;
+    @Column(name = "question_id")
+    private Long questionId;
 
-    @Column(name = "id_test")
-    private Long IdTest;
+    @Column(name = "test_id")
+    private Long testId;
 
-    @Column(name = "Question")
+    @Column(name = "question")
     private String question;
 
-    @Column(name = "Opt_A")
+    @Column(name = "opt_a")
     private String optA;
 
-    @Column(name = "Opt_B")
+    @Column(name = "opt_b")
     private String optB;
 
-    @Column(name = "Opt_C")
+    @Column(name = "opt_c")
     private String optC;
 
-    @Column(name = "Opt_D")
+    @Column(name = "opt_d")
     private String optD;
 
-    @Column(name = "Answer")
+    @Column(name = "answer")
     private Integer answer;
 
     // getters and setters

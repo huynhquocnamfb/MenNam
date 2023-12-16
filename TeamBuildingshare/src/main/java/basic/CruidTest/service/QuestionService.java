@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface QuestionService {
     List<Question> getQuestionsByTestId(Long testId);
+    String editQuestion(Question question);
+    Question getQuestionById(Long questionId);
+    Question createQuestion(Question question);
 }
