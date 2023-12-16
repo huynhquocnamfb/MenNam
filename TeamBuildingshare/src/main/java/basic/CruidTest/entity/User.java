@@ -1,19 +1,21 @@
 package basic.CruidTest.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idUser")
-    private Long idUser;
-    @Column(name = "userName")
-    private String userName;
+    @Column(name = "user_id")
+    private Long userId;
+    @Column(name = "user_name")
+    private String username;
+    @JsonIgnore
     @Column(name = "password")
     private String password;
     @Column(name = "name")

@@ -5,9 +5,7 @@ import basic.CruidTest.service.TestService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +20,13 @@ public class TestController {
         List<Test> tests = testService.getAllTests();
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
+    @PostMapping
+    public ResponseEntity<Test> createTest(@RequestBody Test test){
+        return new ResponseEntity<>(testService.createNewTest(test),HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTest(@PathVariable Long id){
+        return new ResponseEntity<>(testService.deleteTestById(id),HttpStatus.OK);
+    }
+
 }

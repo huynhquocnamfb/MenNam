@@ -32,4 +32,8 @@ public class UserController {
         List<RankUser> rank = userService.getRankUser();
         return new ResponseEntity<>(rank, HttpStatus.OK);
     }
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers(){
+        return new ResponseEntity<>(userService.getUsers(),HttpStatus.OK);
+    }
 }

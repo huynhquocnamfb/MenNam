@@ -9,9 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 @Repository
-public interface UserRepository extends JpaRepository<RankUser, Long> {
-    Optional<User> findByUserName(String userName);
-
-    @Query(value = "select * from userrank ",nativeQuery = true)
-    List<RankUser> getAllUser();
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByUsername(String username);
 }

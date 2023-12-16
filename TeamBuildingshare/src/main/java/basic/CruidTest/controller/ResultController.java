@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/result")
+@RequestMapping("/api/results")
 @AllArgsConstructor
 public class ResultController {
     private final ResultService resultService;
